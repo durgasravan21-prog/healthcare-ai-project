@@ -1,0 +1,189 @@
+HEALTHCARE RECORDS ANALYSIS — FINAL PROJECT REPORT
+=======================================================
+
+1. PROJECT OVERVIEW
+This project analyzes synthetic healthcare records to explore
+patient demographics, reported symptoms, and visit patterns.
+It is an educational demonstration, not a clinical tool.
+
+2. DATASET SUMMARY
+Total records: 500
+Total columns: 15
+Missing cells: 0
+Duplicate rows: 0
+
+Condition-label distribution:
+synthetic_condition_label
+Allergic rhinitis                    41
+Skin irritation                      31
+Type 2 diabetes follow-up context    29
+Anemia-like symptoms                 28
+Healthy / routine visit              27
+Asthma-like respiratory symptoms     26
+Urinary symptoms                     26
+Anxiety-related symptoms             26
+Hypertension follow-up context       25
+Ear infection-like symptoms          25
+Migraine-like headache               24
+Influenza-like illness               24
+Dermatitis-like symptoms             23
+Gastroenteritis-like illness         23
+Conjunctivitis-like symptoms         22
+Acid reflux-like symptoms            22
+Dental pain                          21
+Common cold                          20
+Osteoarthritis-like symptoms         19
+Muscle strain-like symptoms          18
+
+3. MODEL COMPARISON
+              Model  Accuracy  Macro F1
+Logistic Regression      0.68  0.682092
+      Random Forest      0.67  0.671160
+
+4. MODEL EVALUATION
+SYNTHETIC DATASET MODEL EVALUATION
+=============================================
+Test records: 100
+Accuracy: 0.6800
+
+CLASSIFICATION REPORT
+                                   precision    recall  f1-score   support
+
+        Acid reflux-like symptoms       0.75      0.75      0.75         4
+                Allergic rhinitis       0.50      0.88      0.64         8
+             Anemia-like symptoms       0.67      0.67      0.67         6
+         Anxiety-related symptoms       1.00      0.60      0.75         5
+ Asthma-like respiratory symptoms       0.80      0.80      0.80         5
+                      Common cold       0.60      0.75      0.67         4
+     Conjunctivitis-like symptoms       0.43      0.75      0.55         4
+                      Dental pain       1.00      0.50      0.67         4
+         Dermatitis-like symptoms       1.00      0.40      0.57         5
+      Ear infection-like symptoms       0.67      0.80      0.73         5
+     Gastroenteritis-like illness       0.67      0.40      0.50         5
+          Healthy / routine visit       1.00      1.00      1.00         5
+   Hypertension follow-up context       0.80      0.80      0.80         5
+           Influenza-like illness       0.50      0.40      0.44         5
+           Migraine-like headache       0.50      0.60      0.55         5
+      Muscle strain-like symptoms       1.00      0.50      0.67         4
+     Osteoarthritis-like symptoms       0.75      0.75      0.75         4
+                  Skin irritation       0.50      0.67      0.57         6
+Type 2 diabetes follow-up context       0.83      0.83      0.83         6
+                 Urinary symptoms       1.00      0.60      0.75         5
+
+                         accuracy                           0.68       100
+                        macro avg       0.75      0.67      0.68       100
+                     weighted avg       0.74      0.68      0.68       100
+
+CONFUSION MATRIX
+                                   Acid reflux-like symptoms  Allergic rhinitis  Anemia-like symptoms  Anxiety-related symptoms  Asthma-like respiratory symptoms  Common cold  Conjunctivitis-like symptoms  Dental pain  Dermatitis-like symptoms  Ear infection-like symptoms  Gastroenteritis-like illness  Healthy / routine visit  Hypertension follow-up context  Influenza-like illness  Migraine-like headache  Muscle strain-like symptoms  Osteoarthritis-like symptoms  Skin irritation  Type 2 diabetes follow-up context  Urinary symptoms
+Acid reflux-like symptoms                                  3                  1                     0                         0                                 0            0                             0            0                         0                            0                             0                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Allergic rhinitis                                          0                  7                     0                         0                                 0            1                             0            0                         0                            0                             0                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Anemia-like symptoms                                       0                  1                     4                         0                                 0            0                             1            0                         0                            0                             0                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Anxiety-related symptoms                                   0                  1                     0                         3                                 0            0                             0            0                         0                            0                             0                        0                               0                       0                       1                            0                             0                0                                  0                 0
+Asthma-like respiratory symptoms                           0                  0                     0                         0                                 4            0                             1            0                         0                            0                             0                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Common cold                                                0                  0                     0                         0                                 0            3                             0            0                         0                            0                             1                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Conjunctivitis-like symptoms                               0                  1                     0                         0                                 0            0                             3            0                         0                            0                             0                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Dental pain                                                0                  1                     0                         0                                 0            0                             1            2                         0                            0                             0                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Dermatitis-like symptoms                                   1                  1                     0                         0                                 1            0                             0            0                         2                            0                             0                        0                               0                       0                       0                            0                             0                0                                  0                 0
+Ear infection-like symptoms                                0                  0                     0                         0                                 0            0                             0            0                         0                            4                             0                        0                               0                       0                       0                            0                             0                1                                  0                 0
+Gastroenteritis-like illness                               0                  0                     0                         0                                 0            0                             1            0                         0                            0                             2                        0                               0                       0                       2                            0                             0                0                                  0                 0
+Healthy / routine visit                                    0                  0                     0                         0                                 0            0                             0            0                         0                            0                             0                        5                               0                       0                       0                            0                             0                0                                  0                 0
+Hypertension follow-up context                             0                  0                     1                         0                                 0            0                             0            0                         0                            0                             0                        0                               4                       0                       0                            0                             0                0                                  0                 0
+Influenza-like illness                                     0                  0                     0                         0                                 0            0                             0            0                         0                            0                             0                        0                               0                       2                       0                            0                             0                3                                  0                 0
+Migraine-like headache                                     0                  0                     1                         0                                 0            0                             0            0                         0                            0                             0                        0                               0                       0                       3                            0                             0                0                                  1                 0
+Muscle strain-like symptoms                                0                  0                     0                         0                                 0            0                             0            0                         0                            1                             0                        0                               0                       0                       0                            2                             1                0                                  0                 0
+Osteoarthritis-like symptoms                               0                  0                     0                         0                                 0            0                             0            0                         0                            0                             0                        0                               1                       0                       0                            0                             3                0                                  0                 0
+Skin irritation                                            0                  0                     0                         0                                 0            1                             0            0                         0                            0                             0                        0                               0                       1                       0                            0                             0                4                                  0                 0
+Type 2 diabetes follow-up context                          0                  0                     0                         0                                 0            0                             0            0                         0                            0                             0                        0                               0                       1                       0                            0                             0                0                                  5                 0
+Urinary symptoms                                           0                  1                     0                         0                                 0            0                             0            0                         0                            1                             0                        0                               0                       0                       0                            0                             0                0                                  0                 3
+
+CROSS-VALIDATION ACCURACY
+Fold scores: [0.71 0.64 0.74 0.65 0.68]
+Mean accuracy: 0.684
+Standard deviation: 0.037
+
+
+Limitation: Results describe performance on a synthetic educational dataset only. They do not establish clinical validity.
+
+5. RESPONSIBLE AI AND LIMITATIONS
+RESPONSIBLE AI AND DATA LIMITATIONS REPORT
+==================================================
+
+1. DATASET TRANSPARENCY
+This project uses synthetic healthcare records for educational analysis.
+The records do not represent verified real-world patients.
+
+2. PRIVACY
+Patient identifiers are synthetic identifiers, not verified identities.
+If real data is introduced later, access controls, data minimization,
+and appropriate authorization must be implemented.
+
+3. BIAS AND REPRESENTATION
+Review demographic distributions and missing values before interpreting
+results. Distribution checks alone cannot establish that a dataset is fair.
+
+4. MODEL TRANSPARENCY
+The model uses logistic regression with preprocessing pipelines.
+Its predictions reflect patterns in the synthetic training data.
+Predictions must not be treated as medical diagnoses.
+
+5. EVALUATION LIMITATIONS
+A held-out test split estimates performance on this dataset only.
+It does not establish performance on real patients or other populations.
+
+6. SAFE USE
+Do not use this project for diagnosis, treatment selection, or clinical
+decision-making. Seek qualified healthcare professionals for medical care.
+
+7. DATASET CHECKS
+
+Dataset size: 500 records and 15 columns.
+
+Records by sex:
+sex
+Other / not specified    183
+Female                   161
+Male                     156
+
+Records by age group:
+age_group
+adult     224
+senior    176
+child     100
+
+Records by region:
+region
+South      106
+West       105
+North      100
+Central     98
+East        91
+
+Missing values by column:
+patient_id                      0
+age                             0
+age_group                       0
+sex                             0
+region                          0
+visit_date                      0
+visit_type                      0
+reported_symptoms               0
+symptom_duration                0
+reported_severity               0
+synthetic_condition_label       0
+category                        0
+care_context_note               0
+synthetic_treatment_category    0
+treatment_record_status         0
+
+Duplicate patient IDs: 0
+
+8. CONCLUSION
+Responsible use requires transparency, careful interpretation, privacy
+protection, and further validation before any real-world application.
+
+6. CONCLUSION
+The project demonstrates data processing, visualization,
+search, classification, evaluation, and responsible-AI reporting.
+All findings are limited to the synthetic dataset and should not
+be interpreted as evidence of real-world medical performance.

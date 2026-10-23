@@ -1,0 +1,75 @@
+RESPONSIBLE AI AND DATA LIMITATIONS REPORT
+==================================================
+
+1. DATASET TRANSPARENCY
+This project uses synthetic healthcare records for educational analysis.
+The records do not represent verified real-world patients.
+
+2. PRIVACY
+Patient identifiers are synthetic identifiers, not verified identities.
+If real data is introduced later, access controls, data minimization,
+and appropriate authorization must be implemented.
+
+3. BIAS AND REPRESENTATION
+Review demographic distributions and missing values before interpreting
+results. Distribution checks alone cannot establish that a dataset is fair.
+
+4. MODEL TRANSPARENCY
+The model uses logistic regression with preprocessing pipelines.
+Its predictions reflect patterns in the synthetic training data.
+Predictions must not be treated as medical diagnoses.
+
+5. EVALUATION LIMITATIONS
+A held-out test split estimates performance on this dataset only.
+It does not establish performance on real patients or other populations.
+
+6. SAFE USE
+Do not use this project for diagnosis, treatment selection, or clinical
+decision-making. Seek qualified healthcare professionals for medical care.
+
+7. DATASET CHECKS
+
+Dataset size: 500 records and 15 columns.
+
+Records by sex:
+sex
+Other / not specified    183
+Female                   161
+Male                     156
+
+Records by age group:
+age_group
+adult     224
+senior    176
+child     100
+
+Records by region:
+region
+South      106
+West       105
+North      100
+Central     98
+East        91
+
+Missing values by column:
+patient_id                      0
+age                             0
+age_group                       0
+sex                             0
+region                          0
+visit_date                      0
+visit_type                      0
+reported_symptoms               0
+symptom_duration                0
+reported_severity               0
+synthetic_condition_label       0
+category                        0
+care_context_note               0
+synthetic_treatment_category    0
+treatment_record_status         0
+
+Duplicate patient IDs: 0
+
+8. CONCLUSION
+Responsible use requires transparency, careful interpretation, privacy
+protection, and further validation before any real-world application.

@@ -339,6 +339,11 @@ def demonstrate_search_algorithms():
         "illustrative workflow, not medical recommendations."
     )
 
+def show_feature_importance():
+    from feature_importance import main as run_feature_importance
+
+    run_feature_importance()
+
 
 # --------------------------------------------------
 # 8. MAIN MENU
@@ -360,8 +365,8 @@ def display_menu():
     print("10. Evaluate machine-learning model")
     print("11. Generate Responsible AI report")
     print("12. Demonstrate BFS and DFS")
-    print("13. Exit")
-    print("=" * 58)
+    print("13. Display model feature importance")
+    print("14. Exit")
 
 
 def main():
@@ -413,9 +418,11 @@ def main():
             elif choice == "13":
                 print("\nExiting project. Goodbye!")
                 break
+            elif choice == "14":
+                show_feature_importance()
 
             else:
-                print("\nInvalid choice. Enter a number from 1 to 13.")
+                print("\nInvalid choice. Enter a number from 1 to 14.")
                 continue
 
         except Exception as error:
