@@ -277,8 +277,8 @@ elif page.startswith("Unit V"):
     model_name = st.text_input("Local Ollama model name", "llama3.2")
     if st.button("Generate grounded answer with local Ollama"):
         try:
-            context = "\\n".join(note for note, _ in retrieve_context(rag_question))
-            prompt = build_prompt(rag_question, style="Faculty viva") + "\\nRETRIEVED CONTEXT:\\n" + context
+            context = "\n".join(note for note, _ in retrieve_context(rag_question))
+            prompt = build_prompt(rag_question, style="Faculty viva") + "\nRETRIEVED CONTEXT:\n" + context
             answer = ollama_generate(prompt, model=model_name)
             st.write(answer)
             st.caption("Verify generated statements against the source notes. LLM output can still hallucinate.")
