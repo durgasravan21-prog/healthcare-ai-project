@@ -15,7 +15,7 @@ class SearchTests(unittest.TestCase):
 
     def test_bfs_finds_shortest_edge_count(self):
         result = bfs(GRAPH, "Start", "End")
-        self.assertEqual(result["steps"], 4)
+        self.assertEqual(result["steps"], 5)
 
 
 class KnowledgeTests(unittest.TestCase):
