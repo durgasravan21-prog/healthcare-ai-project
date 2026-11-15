@@ -26,6 +26,8 @@ healthcare-ai-project/
 │   ├── generative.py
 │   └── responsible_ai.py
 ├── app.py
+├── tests/
+│   └── test_ai_modules.py
 ├── requirements.txt
 ├── SYLLABUS_MAPPING.md
 └── FACULTY_GUIDE.md
@@ -63,3 +65,20 @@ Optional local LLM: install Ollama separately, download a model such as llama3.2
 ## Documentation
 - SYLLABUS_MAPPING.md — coverage by unit
 - FACULTY_GUIDE.md — demonstration sequence, algorithms and viva questions
+
+
+## Run the built-in tests
+From the project root, after installing the requirements:
+
+~~~bash
+python -m unittest discover -s tests
+~~~
+
+## Optional local LLM
+To try the Unit V local LLM button:
+1. Install Ollama separately from its official website.
+2. Start the Ollama service.
+3. Download a supported model, for example: ollama pull llama3.2
+4. Keep Ollama running and enter the same model name in the dashboard.
+
+Without Ollama, all search, reasoning, machine-learning, retrieval and dashboard demonstrations remain available.
