@@ -80,6 +80,27 @@ if page.startswith("Unit I"):
         ["Data Science", "Extracts insights from data", "Pandas summaries and charts"],
     ], columns=["Field", "Meaning", "Project connection"]))
 
+    st.subheader("AI history and evolution")
+    st.table(pd.DataFrame([
+        ["1950", "Alan Turing proposes the imitation game"],
+        ["1956", "Dartmouth workshop helps establish AI as a research field"],
+        ["1980s", "Expert systems and symbolic AI become prominent"],
+        ["2010s", "Large datasets and deep learning drive major advances"],
+        ["2020s", "Foundation models and generative AI become widely used"],
+    ], columns=["Period", "Milestone"]))
+    st.subheader("Types and applications of AI")
+    st.table(pd.DataFrame([
+        ["Narrow AI", "Designed for a limited task", "Image classification or search"],
+        ["General AI (AGI)", "Hypothetical broad human-level capability", "Not currently implemented"],
+        ["Superintelligence", "Hypothetical intelligence beyond human capability", "Future concept"],
+        ["Healthcare", "Record analysis and imaging support", "This educational dataset project"],
+        ["Agriculture", "Crop monitoring and disease detection", "Example application"],
+        ["Finance", "Fraud detection and risk analysis", "Example application"],
+        ["Education", "Tutoring and adaptive learning", "Example application"],
+        ["Manufacturing / Robotics", "Quality inspection and robot control", "Example application"],
+        ["Smart cities", "Traffic and resource optimization", "Example application"],
+    ], columns=["Type / Domain", "Description", "Example"]))
+
     st.subheader("AI lifecycle")
     st.write("Problem definition → Data collection → Preparation → Method selection → Evaluation → Deployment → Monitoring and governance")
 
@@ -176,6 +197,9 @@ elif page.startswith("Unit III"):
         utility_based_agent(record),
         learning_agent_demo(),
     ]
+    st.subheader("Rational agents and environment")
+    st.write("A rational agent selects an action expected to perform well against its performance measure, given its percept history and available knowledge.")
+    st.write("Agent environments may be fully/partially observable, deterministic/stochastic, episodic/sequential, static/dynamic, discrete/continuous, and single-/multi-agent.")
     st.subheader("Agent architecture comparison")
     st.table(pd.DataFrame([[a.agent_name, a.action, a.explanation] for a in agents],
                           columns=["Agent type", "Action", "Decision basis"]))
@@ -244,6 +268,9 @@ elif page.startswith("Unit V"):
         st.info(rag_answer(rag_question))
     st.caption("This implements local retrieval with TF-IDF. It does not call an LLM or claim generated answers.")
 
+    st.subheader("LLM and hallucination awareness")
+    st.write("A Large Language Model (LLM) generates text by predicting likely token sequences from context. It can produce fluent but unsupported statements called hallucinations.")
+    st.write("Mitigation: retrieve trusted context, constrain the prompt, ask the model to state uncertainty, check sources, and require human review. A prompt alone cannot guarantee correctness.")
     st.subheader("Explainability")
     explain_id = st.selectbox("Select a record to explain", df["patient_id"].tolist(), key="explain_record")
     row = df[df["patient_id"] == explain_id].iloc[0].to_dict()
