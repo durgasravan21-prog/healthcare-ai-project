@@ -17,7 +17,7 @@ from ai.responsible_ai import (
     responsible_ai_checklist,
 )
 from ai.generative import (
-    build_prompt, retrieve_context, rag_answer, prompt_experiments,
+    build_prompt, retrieve_context, rag_answer, prompt_experiments, ollama_generate,
 )
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -266,7 +266,17 @@ elif page.startswith("Unit V"):
             st.write(f"- Similarity {score:.2f}: {note}")
         st.write("Grounded retrieval output")
         st.info(rag_answer(rag_question))
-    st.caption("This implements local retrieval with TF-IDF. It does not call an LLM or claim generated answers.")
+    st.caption("Local TF-IDF retrieval is always available. Optional LLM generation below requires Ollama installed and running on this computer.")
+    model_name = st.text_input("Local Ollama model name", "llama3.2")
+    if st.button("Generate grounded answer with local Ollama"):
+        try:
+            context = "\\n".join(note for note, _ in retrieve_context(rag_question))
+            prompt = build_prompt(rag_question, style="Faculty viva") + "\\nRETRIEVED CONTEXT:\\n" + context
+            answer = ollama_generate(prompt, model=model_name)
+            st.write(answer)
+            st.caption("Verify generated statements against the source notes. LLM output can still hallucinate.")
+        except Exception as error:
+            st.warning("Ollama is not available. Install and start Ollama, pull a model, and try again. Details: " + str(error))
 
     st.subheader("LLM and hallucination awareness")
     st.write("A Large Language Model (LLM) generates text by predicting likely token sequences from context. It can produce fluent but unsupported statements called hallucinations.")
