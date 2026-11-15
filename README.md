@@ -55,10 +55,10 @@ streamlit run app.py
 ~~~
 
 ## Technologies
-Python, Pandas, NumPy, scikit-learn and Streamlit.
+Python, Pandas, NumPy, scikit-learn, Streamlit and Requests. Optional: Ollama with a locally downloaded language model.
 
 ## Dataset and safety
-The CSV contains synthetic educational records, not real patient records. Condition and treatment columns are illustrative labels. The project is not clinically validated and must not be used for diagnosis, triage or treatment decisions.
+Optional local LLM: install Ollama separately, download a model such as llama3.2, start the Ollama service, and use the Unit V button. Without Ollama, the local retrieval and prompt-design demonstrations still work.\n\nThe CSV contains synthetic educational records, not real patient records. Condition and treatment columns are illustrative labels. The project is not clinically validated and must not be used for diagnosis, triage or treatment decisions.
 
 ## Documentation
 - SYLLABUS_MAPPING.md — coverage by unit
