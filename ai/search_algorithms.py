@@ -17,7 +17,7 @@ GRAPH = {
 EDGE_COSTS = {(a, b): 1 for a, ns in GRAPH.items() for b in ns}
 HEURISTIC = {"Start": 4, "Registration": 3, "Emergency Desk": 3,
              "Basic Review": 2, "Priority Review": 2, "Information Desk": 2,
-             "Specialist Review": 1, "Follow-up Planning": 1, "End": 0}
+             "Specialist Review": 2, "Follow-up Planning": 1, "End": 0}
 
 
 def _result(path, explored, started, cost=None):
