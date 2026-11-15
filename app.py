@@ -101,9 +101,13 @@ if page.startswith("Unit I"):
         ["Smart cities", "Traffic and resource optimization", "Example application"],
     ], columns=["Type / Domain", "Description", "Example"]))
 
+    st.subheader("Common characteristics of AI systems")
+    st.write("Perception, knowledge representation, reasoning, learning, planning, problem solving and goal-directed action.")
     st.subheader("AI lifecycle")
     st.write("Problem definition → Data collection → Preparation → Method selection → Evaluation → Deployment → Monitoring and governance")
 
+    st.subheader("Problem, search and solution spaces")
+    st.write("The state space is the set of possible states; the search space is the portion explored by an algorithm; the solution space contains paths that reach a goal. Search performance is compared using completeness, optimality, time and memory requirements.")
     st.subheader("Formal state-space problem formulation")
     st.markdown("""
     - **Initial state:** Start
@@ -176,6 +180,8 @@ elif page.startswith("Unit II"):
     for note in apply_rules(record):
         st.info(note)
     st.caption("Rules summarize dataset fields; they do not diagnose a person.")
+    st.write("A traditional expert system contains a knowledge base (facts and rules), an inference engine (applies rules), and a user interface (accepts inputs and displays conclusions).")
+    st.write("Bayes theorem: P(A|B) = P(B|A) × P(A) / P(B). It updates a prior probability using observed evidence.")
     st.subheader("Bayes theorem / Naive Bayes demonstration")
     symptom_query = st.text_input("Enter symptom words", "headache")
     if symptom_query.strip():
@@ -203,6 +209,7 @@ elif page.startswith("Unit III"):
     st.subheader("Agent architecture comparison")
     st.table(pd.DataFrame([[a.agent_name, a.action, a.explanation] for a in agents],
                           columns=["Agent type", "Action", "Decision basis"]))
+    st.write("Autonomous intelligent systems can sense their environment and act toward goals with limited ongoing human control. In real applications, human-AI collaboration keeps people involved in review and accountability.")
     st.subheader("Cooperative multi-agent simulation")
     st.write("Separate agents check data structure, summarize a field and apply a safety warning.")
     st.table(pd.DataFrame([[a.agent_name, a.action, a.explanation] for a in multi_agent_demo(record)],
