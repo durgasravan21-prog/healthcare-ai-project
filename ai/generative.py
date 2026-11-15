@@ -50,3 +50,16 @@ def rag_answer(question, top_k=3):
     return "Retrieved project notes:\n" + "\n".join(
         f"- {note}" for note, _ in retrieved
     ) + "\n\nThis is retrieval output, not an LLM-generated medical answer."
+
+
+
+def ollama_generate(prompt, model="llama3.2", host="http://localhost:11434"):
+    """Optional local LLM inference through an Ollama server."""
+    import requests
+    response = requests.post(
+        host.rstrip("/") + "/api/generate",
+        json={"model": model, "prompt": prompt, "stream": False},
+        timeout=90,
+    )
+    response.raise_for_status()
+    return response.json().get("response", "")
