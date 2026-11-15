@@ -1,85 +1,50 @@
-"""Knowledge representation and probabilistic reasoning examples."""
-import math
-import re
+"""Knowledge representation, IF-THEN rules and Naive Bayes."""
 from collections import Counter
+from math import exp,log
+import re
 
-SEMANTIC_NETWORK = {
-    "HealthcareRecord": ["Patient", "Visit", "ReportedSymptom", "SyntheticLabel"],
-    "Patient": ["AgeGroup", "Region"],
-    "Visit": ["VisitType", "VisitDate"],
-    "ReportedSymptom": ["SymptomDuration", "ReportedSeverity"],
-    "SyntheticLabel": ["Category", "IllustrativeTreatmentLabel"],
-}
-FRAMES = {
-    "PatientFrame": {"patient_id": "synthetic identifier", "age": "numeric age",
-                     "age_group": "Child / Adult / Senior", "region": "synthetic region"},
-    "VisitFrame": {"visit_type": "visit category", "reported_symptoms": "reported text",
-                   "reported_severity": "synthetic severity label"},
-}
-PRODUCTION_RULES = [
-    ("IF age_group is Senior", "THEN state that the record belongs to Senior age group"),
-    ("IF reported_severity is Severe", "THEN state that the dataset marks it Severe"),
-    ("IF visit_type is Follow-up", "THEN state that it is labelled Follow-up"),
-]
+SEMANTIC_NETWORK={"HealthcareRecord":["Patient","Visit","Symptom","SyntheticLabel"],
+"Patient":["AgeGroup","Region"],"Visit":["VisitType","VisitDate"],
+"Symptom":["Duration","Severity"],"SyntheticLabel":["Category","TreatmentLabel"]}
+FRAMES={"Patient":{"id":"synthetic ID","age":"number","age_group":"Child/Adult/Senior"},
+"Visit":{"type":"visit type","symptoms":"reported text","severity":"synthetic label"}}
+RULES=[("age_group == Senior","Record belongs to Senior age group"),
+("reported_severity == Severe","Dataset marks this record Severe"),
+("visit_type == Follow-up","Record is labelled as a follow-up")]
 
 
-def apply_rules(record):
-    notes = []
-    if record.get("age_group") == "Senior":
-        notes.append("Age-group rule matched: Senior.")
-    if record.get("reported_severity") == "Severe":
-        notes.append("Severity rule matched: the synthetic dataset says Severe.")
-    if record.get("visit_type") == "Follow-up":
-        notes.append("Visit rule matched: Follow-up.")
-    return notes or ["No demonstration rule matched."]
+def apply_rules(row):
+    checks=[("age_group","Senior"),("reported_severity","Severe"),("visit_type","Follow-up")]
+    found=[f"IF {key} is {value}: {message}"
+           for (key,value),(_,message) in zip(checks,RULES) if row.get(key)==value]
+    return found or ["No rule matched this record."]
 
 
-def propositional_examples():
-    return [
-        ("S AND V", "A record has a symptom label AND a visit entry."),
-        ("S OR F", "A record has a symptom label OR a follow-up label."),
-        ("NOT M", "The selected record is not marked Moderate."),
-    ]
+def logic_examples():
+    return [("S AND V","Symptom entry AND visit entry"),
+    ("S OR F","Symptom entry OR follow-up visit"),("NOT M","Record is not Moderate"),
+    ("Patient(x) -> HasRecord(x)","Predicate logic: patient has a record"),
+    ("Senior(x) -> AgeGroup(x, Senior)","Predicate logic: senior group membership")]
 
 
-def predicate_examples():
-    return [
-        "Patient(x) -> HasSyntheticRecord(x)",
-        "Senior(x) -> BelongsToAgeGroup(x, 'Senior')",
-        "For every x, HealthcareRecord(x) is true for each dataset record.",
-    ]
-
-
-def naive_bayes_category(records, query):
-    """Multinomial Naive Bayes estimate for synthetic categories, not diagnosis."""
-    query_tokens = re.findall(r"[a-z]+", query.lower())
-    if not query_tokens:
-        return []
-    documents = []
-    vocabulary = set()
-    for row in records:
-        tokens = re.findall(r"[a-z]+", str(row.get("reported_symptoms", "")).lower())
-        label = str(row.get("category", "Unknown"))
-        if tokens:
-            documents.append((tokens, label))
-            vocabulary.update(tokens)
-    if not documents or not vocabulary:
-        return []
-    labels = sorted({label for _, label in documents})
-    scores = []
-    for label in labels:
-        class_docs = [tokens for tokens, y in documents if y == label]
-        token_counts = Counter(token for tokens in class_docs for token in tokens)
-        total_tokens = sum(token_counts.values())
-        denominator = total_tokens + len(vocabulary)
-        score = math.log(len(class_docs) / len(documents))
-        query_counts = Counter(query_tokens)
-        for word, frequency in query_counts.items():
-            score += frequency * math.log((token_counts[word] + 1) / denominator)
-        scores.append((label, score))
-    maximum = max(score for _, score in scores)
-    exponentials = [(label, math.exp(score - maximum)) for label, score in scores]
-    normalizer = sum(value for _, value in exponentials)
-    return sorted([(label, round(value / normalizer, 4))
-                   for label, value in exponentials],
-                  key=lambda item: item[1], reverse=True)
+def naive_bayes(records,query):
+    """Multinomial Naive Bayes for synthetic categories, never diagnosis."""
+    words=Counter(re.findall(r"[a-z]+",query.lower()))
+    docs=[(re.findall(r"[a-z]+",str(r.get("reported_symptoms","")).lower()),
+           str(r.get("category","Unknown"))) for r in records]
+    docs=[(tokens,label) for tokens,label in docs if tokens]
+    vocab={w for tokens,_ in docs for w in tokens}
+    if not words or not docs or not vocab: return []
+    scores=[]
+    for label in sorted({y for _,y in docs}):
+        group=[tokens for tokens,y in docs if y==label]
+        counts=Counter(w for tokens in group for w in tokens)
+        denom=sum(counts.values())+len(vocab)
+        score=log(len(group)/len(docs))+sum(
+            n*log((counts[w]+1)/denom) for w,n in words.items())
+        scores.append((label,score))
+    top=max(s for _,s in scores)
+    probabilities=[(label,exp(score-top)) for label,score in scores]
+    total=sum(p for _,p in probabilities)
+    return sorted([(label,round(p/total,4)) for label,p in probabilities],
+                  key=lambda item:item[1],reverse=True)

@@ -1,37 +1,25 @@
-"""Basic explainability, fairness and data-quality diagnostics."""
+"""Data quality, explainability and group-distribution checks."""
 import pandas as pd
 
-
-def data_quality_summary(df):
-    return {
-        "rows": len(df),
-        "duplicate_rows": int(df.duplicated().sum()),
-        "missing_cells": int(df.isna().sum().sum()),
-        "columns": len(df.columns),
-        "duplicate_patient_ids": int(df["patient_id"].duplicated().sum())
-        if "patient_id" in df else None,
-    }
+def quality(df):
+    return {"rows":len(df),"columns":len(df.columns),
+    "missing cells":int(df.isna().sum().sum()),
+    "duplicate rows":int(df.duplicated().sum()),
+    "duplicate patient IDs":int(df.patient_id.duplicated().sum())}
 
 
-def group_distribution(df, group_column, target_column="category"):
-    if group_column not in df or target_column not in df:
-        return pd.DataFrame()
-    return pd.crosstab(df[group_column].fillna("Missing"),
-                       df[target_column].fillna("Missing"))
+def group_table(df,group):
+    return pd.crosstab(df[group].fillna("Missing"),df.category.fillna("Missing"))
 
 
-def simple_explanation(row):
-    fields = ["age_group", "category", "visit_type", "reported_severity"]
-    return [f"{field}: {row.get(field, 'Not available')}"
-            for field in fields if field in row]
+def explain(row):
+    return [f"{key}: {row.get(key,'N/A')}"
+            for key in ["age_group","category","visit_type","reported_severity"]]
 
 
-def responsible_ai_checklist():
-    return [
-        ("Privacy", "Use synthetic records; never upload identifiable real patient data."),
-        ("Fairness", "Compare group distributions; differences alone do not prove discrimination."),
-        ("Transparency", "Show the fields, rules and methods behind each output."),
-        ("Safety", "Do not use this educational model for diagnosis, triage or treatment."),
-        ("Accountability", "Humans remain responsible for real-world healthcare decisions."),
-        ("Security", "Restrict data access and do not store credentials or personal identifiers."),
-    ]
+CHECKLIST=[("Privacy","Use synthetic records; never expose identifiable health data."),
+("Fairness","Group differences are descriptive, not proof of discrimination."),
+("Transparency","Show input fields, rules and model limitations."),
+("Safety","Never use this classroom model for diagnosis or treatment."),
+("Accountability","Humans remain responsible for real-world decisions."),
+("Security","Restrict access and protect stored data.")]
